@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 3.6.4 commit date:2023-09-25, commit time:13:24, hash:21bfc5e7fe3f</authoring_tool>
+    </contributor>
+    <created>2024-03-14T11:41:53</created>
+    <modified>2024-03-14T11:41:53</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="Material_001-effect">
+      <profile_COMMON>
+        <newparam sid="prototype_HD_png-surface">
+          <surface type="2D">
+            <init_from>prototype_HD_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="prototype_HD_png-sampler">
+          <sampler2D>
+            <source>prototype_HD_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="prototype_HD_png-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="prototype_HD_png" name="prototype_HD_png">
+      <init_from>prototype_HD.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="Material_001-material" name="Material.001">
+      <instance_effect url="#Material_001-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="perception_lab-mesh" name="perception_lab">
+      <mesh>
+        <source id="perception_lab-mesh-positions">
+          <float_array id="perception_lab-mesh-positions-array" count="24">-5 -5 -0.004999995 -5 -5 0.004999995 -5 5 0.004999995 -5 5 -0.004999995 5 5 0.004999995 5 5 -0.004999995 5 -5 0.004999995 5 -5 -0.004999995</float_array>
+          <technique_common>
+            <accessor source="#perception_lab-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="perception_lab-mesh-normals">
+          <float_array id="perception_lab-mesh-normals-array" count="18">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#perception_lab-mesh-normals-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="perception_lab-mesh-map-0">
+          <float_array id="perception_lab-mesh-map-0-array" count="72">1 0 1 4.99989e-4 0.5 5.00032e-4 1 0 0.5 5.00032e-4 0.5 0 1 5.0001e-4 1 0.000999987 0.5 0.001000046 1 5.0001e-4 0.5 0.001000046 0.5 5.00054e-4 1 0.000999987 1 0.00150001 0.5 0.00150007 1 0.000999987 0.5 0.00150007 0.5 0.001000046 1 0.00150001 1 0.002000033 0.5 0.002000093 1 0.00150001 0.5 0.002000093 0.5 0.00150007 0.5 0.5 0 0.5 0 0 0.5 0.5 0 0 0.5 0 0.9712041 0.9770634 0.02098339 0.9770634 0.02098339 0.02684277 0.9712041 0.9770634 0.02098339 0.02684277 0.9712041 0.02684277</float_array>
+          <technique_common>
+            <accessor source="#perception_lab-mesh-map-0-array" count="36" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="perception_lab-mesh-vertices">
+          <input semantic="POSITION" source="#perception_lab-mesh-positions"/>
+        </vertices>
+        <triangles material="Material_001-material" count="12">
+          <input semantic="VERTEX" source="#perception_lab-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#perception_lab-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#perception_lab-mesh-map-0" offset="2" set="0"/>
+          <p>0 0 0 1 0 1 2 0 2 0 0 3 2 0 4 3 0 5 3 1 6 2 1 7 4 1 8 3 1 9 4 1 10 5 1 11 5 2 12 4 2 13 6 2 14 5 2 15 6 2 16 7 2 17 7 3 18 6 3 19 1 3 20 7 3 21 1 3 22 0 3 23 3 4 24 5 4 25 7 4 26 3 4 27 7 4 28 0 4 29 4 5 30 2 5 31 1 5 32 4 5 33 1 5 34 6 5 35</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="perception_lab" name="perception_lab" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#perception_lab-mesh" name="perception_lab">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material_001-material" target="#Material_001-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

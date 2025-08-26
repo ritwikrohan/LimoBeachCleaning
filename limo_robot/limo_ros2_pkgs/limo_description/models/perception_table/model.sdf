@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<sdf version='1.4'>
+  <model name="perception_table">
+      <static>1</static>
+      <link name='perception_table_link'>
+        <visual name='perception_table_visual'>
+          <geometry>
+            <box>
+              <size>0.3 0.3 0.08</size>
+            </box>
+          </geometry>
+        </visual>
+        <collision name='perception_table_collision'>
+          <geometry>
+            <box>
+              <size>0.3 0.3 0.08</size>
+            </box>
+          </geometry>
+        </collision>      
+      </link>   
+  </model>
+</sdf>
+

@@ -1,0 +1,2185 @@
+<sdf version='1.9'>
+  <world name='beach_world'>
+    <physics name='1ms' type='ignored'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <plugin name='gz::sim::systems::Contact' filename='ignition-gazebo-contact-system'/>
+    <plugin name='gz::sim::systems::Imu' filename='ignition-gazebo-imu-system'/>
+    <plugin name='gz::sim::systems::Physics' filename='ignition-gazebo-physics-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='ignition-gazebo-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin name='gz::sim::systems::UserCommands' filename='ignition-gazebo-user-commands-system'/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>50.088279999999997</latitude_deg>
+      <longitude_deg>19.938931</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <scene>
+      <ambient>0.8 0.8 0.8 1</ambient>
+      <background>0 0 0 1</background>
+      <grid>false</grid>
+      <shadows>true</shadows>
+    </scene>
+    <gui fullscreen='false'>
+      <camera name='gui_camera'>
+        <pose>25.2459 0.588279 23.8295 0 0.925797 -2.86917</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <include>
+      <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/models/ground_plane_invisible</uri>
+      <name>ground_plane_invisible</name>
+      <pose>1 2 0.2 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/models/perception_table</uri>
+      <name>perception_table</name>
+      <pose>0.3295 -5 0.232 0 -0 0</pose>
+    </include>
+    <model name='trash'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <mass>0.01</mass>
+          <inertia>
+            <ixx>5.6666699999999999e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.6666699999999999e-06</iyy>
+            <iyz>0</iyz>
+            <izz>6.6666700000000005e-07</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.08</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <poissons_ratio>0.14999999999999999</poissons_ratio>
+              <elastic_modulus>80000000000</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+              </torsional>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.08</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+            <specular>0 1 0 1</specular>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.232 -5 0.312 -0 -0 0</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='rc_boat_instance'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='Propeller_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Propeller</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Thruster_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Thruster</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rudder_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Rudder</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Boat_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Boat</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5 -1 0.3 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='rc_boat_instance_2'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='Propeller_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Propeller</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Thruster_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Thruster</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rudder_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Rudder</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Boat_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Boat</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.5 -1 0.3 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='rc_boat_instance_3'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='Propeller_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Propeller</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Thruster_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Thruster</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rudder_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Rudder</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Boat_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/meshes/rcboat.dae</uri>
+              <submesh>
+                <name>Boat</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Normal.png</normal_map>
+                <metalness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Metalness.png</metalness_map>
+                <roughness_map>https://fuel.gazebosim.org/1.0/openrobotics/models/rc%20boat/4/files/materials/textures/Boat_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.5 -1 0.3 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='tent'>
+      <static>true</static>
+      <link name='base_link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://Tent/meshes/tent.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://Tent/meshes/tent.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>0</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.58481 -8.05568 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='foldable_chair'>
+      <static>true</static>
+      <link name='base_link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://FoldableChair/meshes/foldable_chair.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose>0 0.05 0.4 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.5 0.5 0.8</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.466492 -8.11802 0.17 0 -0 3</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='foldable_chair_0'>
+      <static>true</static>
+      <link name='base_link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>0.1 0.1 0.1</scale>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://FoldableChair/meshes/foldable_chair.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose>0 0.05 0.4 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.5 0.5 0.8</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.54198 -8.22277 0.17 0 -0 3</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Pine Tree'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='branch'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+              <submesh>
+                <name>Branch</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <double_sided>true</double_sided>
+            <diffuse>1 1 1 1</diffuse>
+            <script>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/materials/scripts/</uri>
+              <uri>model://PineTree/materials/textures/</uri>
+              <name>PineTree/Branch</name>
+            </script>
+            <pbr>
+              <metal>
+                <albedo_map>model://PineTree/materials/textures/branch_2_diffuse.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='bark'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+              <submesh>
+                <name>Bark</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <script>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/materials/scripts/</uri>
+              <uri>model://PineTree/materials/textures/</uri>
+              <name>PineTree/Bark</name>
+            </script>
+            <pbr>
+              <metal>
+                <albedo_map>model://PineTree/materials/textures/branch_2_diffuse.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.4025 -13.4031 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Pine Tree_0'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='branch'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+              <submesh>
+                <name>Branch</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <double_sided>true</double_sided>
+            <diffuse>1 1 1 1</diffuse>
+            <script>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/materials/scripts/</uri>
+              <uri>model://PineTree/materials/textures/</uri>
+              <name>PineTree/Branch</name>
+            </script>
+            <pbr>
+              <metal>
+                <albedo_map>model://PineTree/materials/textures/branch_2_diffuse.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='bark'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+              <submesh>
+                <name>Bark</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <script>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/materials/scripts/</uri>
+              <uri>model://PineTree/materials/textures/</uri>
+              <name>PineTree/Bark</name>
+            </script>
+            <pbr>
+              <metal>
+                <albedo_map>model://PineTree/materials/textures/bark_diffuse.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-21.8832 -10.8705 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Pine Tree_1'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='branch'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://PineTree/meshes/pine_tree.dae</uri>
+              <submesh>
+                <name>Branch</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <double_sided>true</double_sided>
+            <diffuse>1 1 1 1</diffuse>
+            <script>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/materials/scripts/</uri>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/materials/textures/</uri>
+              <name>PineTree/Branch</name>
+            </script>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/materials/textures/branch_2_diffuse.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='bark'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/meshes/pine_tree.dae</uri>
+              <submesh>
+                <name>Bark</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <script>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/materials/scripts/</uri>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/materials/textures/</uri>
+              <name>PineTree/Bark</name>
+            </script>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/pine tree/6/files/materials/textures/bark_diffuse.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.81921 -11.8626 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='plastic_cup'>
+      <link name='link'>
+        <pose>0 0 0.065 0 -0 0</pose>
+        <inertial>
+          <mass>0.059900000000000002</mass>
+          <inertia>
+            <ixx>0.00030289599999999998</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00030289599999999998</iyy>
+            <iyz>0</iyz>
+            <izz>3.2876400000000003e-05</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/plastic cup/3/files/meshes/plastic_cup.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <poissons_ratio>0.34999999999999998</poissons_ratio>
+              <elastic_modulus>3102640776</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+              </torsional>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/plastic cup/3/files/meshes/plastic_cup.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/GreyTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>7.11967 -6.5145 0.268308 1.52546 -0.188919 2.22403</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Stop Sign'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://StopSign/meshes/stop_sign.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://StopSign/meshes/stop_sign.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://StopSign/materials/scripts</uri>
+              <uri>model://StopSign/materials/textures</uri>
+              <name>StopSign/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.73549 -6.08338 0 0 -0 2</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='TrashBin'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/TrashBin/meshes/trash_bin.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/TrashBin/meshes/trash_bin.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>1.05545 -7.10041 0.15 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='TrashBin2'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/TrashBin/meshes/trash_bin.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/TrashBin/meshes/trash_bin.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.138 -5.3063 -0.1 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='stone_10_2_5_1cm'>
+      <link name='link'>
+        <pose>0 0 0.005 0 -0 0</pose>
+        <inertial>
+          <mass>0.062799999999999995</mass>
+          <inertia>
+            <ixx>3.79417e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.2856699999999998e-05</iyy>
+            <iyz>0</iyz>
+            <izz>5.5604199999999999e-05</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.1 0.025 0.01</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <poissons_ratio>0.14999999999999999</poissons_ratio>
+              <elastic_modulus>80000000000</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+              </torsional>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.1 0.025 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.66824 -7.44314 0.245258 -0.268453 -1.55947 0.343981</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='stone_10_2_5_1cm_0'>
+      <link name='link'>
+        <pose>0 0 0.005 0 -0 0</pose>
+        <inertial>
+          <mass>0.062799999999999995</mass>
+          <inertia>
+            <ixx>3.79417e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.2856699999999998e-05</iyy>
+            <iyz>0</iyz>
+            <izz>5.5604199999999999e-05</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.1 0.025 0.01</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <poissons_ratio>0.14999999999999999</poissons_ratio>
+              <elastic_modulus>80000000000</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+              </torsional>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.1 0.025 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.413491 -2.63232 0.093001 -0.085912 0.025849 -0.001611</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='person_standing'>
+      <link name='link'>
+        <inertial>
+          <pose>0 -0.1 0.95 0 -0 0</pose>
+          <mass>80</mass>
+          <inertia>
+            <ixx>24.879999999999999</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>25.73</iyy>
+            <iyz>0</iyz>
+            <izz>2.48</izz>
+          </inertia>
+        </inertial>
+        <collision name='bottom'>
+          <pose>0 -0.1 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.5 0.35 0.02</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='person'>
+          <pose>0 0 0.02 0.04 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/standing person/3/files/meshes/standing.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <pose>0 0 0.02 0.04 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/standing person/3/files/meshes/standing.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.33606 -4.00158 0.136476 0.108961 -0.023336 2.03258</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='rescue_randy_sitting'>
+      <static>true</static>
+      <model name='artifact_proximity_detector'>
+        <static>true</static>
+        <pose>0 0 0 0 0 0</pose>
+        <plugin name='ignition::gazebo::systems::PerformerDetector' filename='libignition-gazebo-performer-detector-system.so'>
+          <topic>/subt_performer_detector</topic>
+          <header_data>
+            <key>type</key>
+            <value>artifact_proximity</value>
+          </header_data>
+          <geometry>
+            <box>
+              <size>10 10 10</size>
+            </box>
+          </geometry>
+        </plugin>
+      </model>
+      <link name='link'>
+        <pose>0 0 -0.623996 0 -0 3</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://RescueRandy/meshes/rescue_randy.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://RescueRandy/meshes/rescue_randy.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+        </visual>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>6.70418 -0.763045 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='FemaleVisitorSit'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://VisitorKid/meshes/kid.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://VisitorKid/meshes/kid_col.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.59945 -8.28198 0.17 0 0 -1.57</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='FemaleVisitorSit_0'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://VisitorKid/meshes/kid.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://VisitorKid/meshes/kid_col.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.419172 -8.1383 0.17 0 0 -1.57</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='cafe_table'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose>0 0 0.755 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.913 0.913 0.04</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='column'>
+          <pose>0 0 0.37 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.042 0.042 0.74</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base'>
+          <pose>0 0 0.02 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.56 0.56 0.04</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cafe table/3/files/meshes/cafe_table.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.02632 -6.29573 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='rope'>
+      <static>true</static>
+      <model name='artifact_proximity_detector'>
+        <static>true</static>
+        <pose>0 0 0 0 0 0</pose>
+        <plugin name='ignition::gazebo::systems::PerformerDetector' filename='libignition-gazebo-performer-detector-system.so'>
+          <topic>/subt_performer_detector</topic>
+          <header_data>
+            <key>type</key>
+            <value>artifact_proximity</value>
+          </header_data>
+          <geometry>
+            <box>
+              <size>10 10 10</size>
+            </box>
+          </geometry>
+        </plugin>
+      </model>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/ClimbingRope/meshes/rope.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/ClimbingRope/meshes/rope.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model:/ClimbingRope/materials/textures/Rope_Albedo.png</albedo_map>
+                <normal_map>model:/ClimbingRope/materials/textures/Rope_Normal.png</normal_map>
+                <roughness_map>model:/ClimbingRope/materials/textures/Rope_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/ClimbingRope/materials/scripts/</uri>
+              <uri>model:/ClimbingRope/materials/textures/</uri>
+              <name>Rope_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.04853 -1 0.1 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Coke'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/Coke/meshes/coke.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model:/Coke/meshes/coke.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>0.00336667</ixx>
+            <iyy>0.000866667</iyy>
+            <izz>0.0041666699999999999</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9 -6 0.8 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='FoodCourtBenchLong'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://FoodCourtBenchLong/meshes/food_court_bench_long.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://FoodCourtBenchLong/meshes/food_court_bench_long_col.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.16905 -8.13909 0.2 0 -0 3</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='FemaleVisitorSit_1'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://VisitorKid/meshes/kid.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://VisitorKid/meshes/kid_col.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.22876 -8.1128 0.17 0 0 -1.57</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='GarbagePileV1'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.6736 -2.05188 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='plastic_cup_0'>
+      <link name='link'>
+        <pose>0 0 0.065 0 -0 0</pose>
+        <inertial>
+          <mass>0.059900000000000002</mass>
+          <inertia>
+            <ixx>0.00030289599999999998</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00030289599999999998</iyy>
+            <iyz>0</iyz>
+            <izz>3.2876400000000003e-05</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/plastic cup/3/files/meshes/plastic_cup.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <surface>
+            <contact>
+              <poissons_ratio>0.34999999999999998</poissons_ratio>
+              <elastic_modulus>3102640776</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+              </torsional>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/plastic cup/3/files/meshes/plastic_cup.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/GreyTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.4347 -5.16333 0.261762 1.42197 0.700552 1.35907</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='plastic_cup_1'>
+      <link name='link'>
+        <pose>0 0 0.065 0 -0 0</pose>
+        <inertial>
+          <mass>0.059900000000000002</mass>
+          <inertia>
+            <ixx>0.00030289599999999998</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00030289599999999998</iyy>
+            <iyz>0</iyz>
+            <izz>3.2876400000000003e-05</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/plastic cup/3/files/meshes/plastic_cup.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <surface>
+            <contact>
+              <poissons_ratio>0.34999999999999998</poissons_ratio>
+              <elastic_modulus>3102640776</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+              </torsional>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/plastic cup/3/files/meshes/plastic_cup.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/GreyTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>15.7764 -4.7119 0.176596 1.525 -0.172263 1.86553</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+    <include>
+      <uri>file://<urdf-string></uri>
+      <name>limo_robot</name>
+      <pose>-0.217384 -5.04873 0.195003 -1e-06 0.009999 -0.070982</pose>
+    </include>
+    <model name='GarbagePileV1_1'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.88984 -2.95355 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='GarbagePileV1_1_1'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>1.64151 -7.25157 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='GarbagePileV1_1_2'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ritwik/asimovo_ws/install/beach_world/share/beach_world/worlds/model://GarbagePile/meshes/garbage_pile.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <collide_bitmask>1</collide_bitmask>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>10.3489 -8.469 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.1 -0.9</direction>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.01</linear>
+        <constant>0.90000000000000002</constant>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+  </world>
+</sdf>

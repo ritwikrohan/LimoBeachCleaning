@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.6">
+  <world name="default">
+
+
+     <scene>
+      <ambient>0.8 0.8 0.8 1.0</ambient>
+      <background>0.5 0.5 0.5</background>
+      <grid>false</grid>
+    </scene>
+
+  <gui>
+      <camera name="gui_camera">
+        <pose>0.465694 1.13961 0.447946 0 0.208 -2.20519</pose>
+      </camera>
+    </gui>
+
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+      <ros>
+        <namespace>/gazebo</namespace>
+      </ros>
+      <update_rate>5.0</update_rate>
+    </plugin>
+
+
+
+    
+
+  </world>
+</sdf>

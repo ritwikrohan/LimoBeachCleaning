@@ -1,0 +1,27 @@
+---
+# https://github.com/orbbec/OrbbecSDK_ROS2#all-available-topics
+- topic_name: <robot_namespace><device_namespace>/color/camera_info
+  ros_type_name: sensor_msgs/msg/CameraInfo
+  gz_type_name: ignition.msgs.CameraInfo
+  lazy: true
+
+- topic_name: <robot_namespace><device_namespace>/color/image_raw
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: ignition.msgs.Image
+  lazy: true
+
+- topic_name: <robot_namespace><device_namespace>/depth/camera_info
+  ros_type_name: sensor_msgs/msg/CameraInfo
+  gz_type_name: ignition.msgs.CameraInfo
+  lazy: true
+
+- topic_name: <robot_namespace><device_namespace>/depth/image_raw
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: ignition.msgs.Image
+  lazy: true
+
+- ros_topic_name: <robot_namespace><device_namespace>/depth/points
+  gz_topic_name: <robot_namespace><device_namespace>/depth/image_raw/points
+  ros_type_name: sensor_msgs/msg/PointCloud2
+  gz_type_name: ignition.msgs.PointCloudPacked
+  lazy: true

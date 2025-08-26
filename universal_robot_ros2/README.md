@@ -1,0 +1,1 @@
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/home/user/ros2_ws/src/robotiq_85_gripper

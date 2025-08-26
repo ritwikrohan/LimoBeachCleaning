@@ -1,0 +1,378 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="firefighter">
+
+
+    <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper_macro_gz_v2.urdf.xacro" />
+
+
+  <xacro:macro name="inertial_properties" params="mass ixx ixy ixz iyy iyz izz">
+    <inertial>
+      <mass value="${mass}"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}" iyy="${iyy}" iyz="${iyz}" izz="${izz}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="geometry_box" params="size">
+    <geometry>
+      <box size="${size}"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="geometry_mesh" params="filename scale">
+    <geometry>
+      <mesh filename="${filename}" scale="${scale}"/>
+    </geometry>
+  </xacro:macro>
+	
+
+
+<xacro:macro name="mycobot_arm" params="arm_parent">
+
+    <!-- Example link using macros -->
+  <link name="g_base">
+    </link>
+
+  <link name="joint1">
+    <visual>
+      <geometry>
+       <mesh filename="package://mycobot_description/meshes/joint1_v2.dae" scale="1 1 1"/>
+      </geometry>
+      <origin xyz = "0.0 0 0 " rpy = "-1.5708 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+       <!-- <cylinder length="0.073" radius="0.045"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint1.stl" scale="1 1 1"/>
+        </geometry>
+        <!-- <origin xyz = "0.0 0 0.0365" rpy = " 0 0 0"/> -->
+        <origin xyz = "0.0 0 0 " rpy = "-1.5708 0 0"/>
+    </collision>
+        <inertial>
+      <mass value="0.25"/>
+      <origin xyz = "0.0 0 0.0365" rpy = " 0 0 0"/>
+      <inertia ixx="0.0002375833333333333" ixy="0" ixz="0" iyy="0.0002375833333333333" iyz="0" izz="0.000253125"/>
+    </inertial>
+  </link>
+
+  <link name="joint2">
+    <visual>
+      <geometry>
+       <mesh filename="package://mycobot_description/meshes/joint2_v2.dae"/>
+      </geometry>
+      <origin xyz = "0.0 0 0" rpy = "-1.5708 0 0"/>
+    </visual>
+    <collision>
+     <geometry>
+       <!-- <cylinder length="0.087" radius="0.024"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint2.stl"/>
+      </geometry>
+      <!-- <origin xyz = "0.0 0 -0.0435" rpy = " 0 0 0"/> -->
+      <origin xyz = "0.0 0 0" rpy = "-1.5708 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.072"/>
+      <origin xyz = "0.0 0 0.0435" rpy = " 0 0 0"/>
+      <inertia ixx="5.578199999999999e-05" ixy="0" ixz="0" iyy="5.578199999999999e-05" iyz="0" izz="2.0736e-05"/>
+    </inertial>
+  </link>
+
+
+  <link name="joint3">
+    <visual>
+      <geometry>
+       <mesh filename="package://mycobot_description/meshes/joint3_v2.dae"/>
+      </geometry>
+    <origin xyz = "0.0 0 0" rpy = "-1.5708 0 0"/>
+    </visual>
+    <collision>
+      <geometry>       
+       <!-- <cylinder length="0.156" radius="0.024"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint3.stl"/>
+      </geometry>
+      <!-- <origin xyz = "-0.055 0 0.06" rpy = "0 1.57 0"/> -->
+      <origin xyz = "0.0 0 0 " rpy = "-1.5708 0 0"/>
+    </collision>
+        <inertial>
+      <mass value="0.072"/>
+      <origin xyz = "0.025 0 0.06" rpy = "0 0 0"/>
+      <inertia ixx="0.00015638399999999997" ixy="0" ixz="0" iyy="0.00015638399999999997" iyz="0" izz="2.0736e-05"/>
+    </inertial>
+  </link>
+
+
+  <link name="joint4">
+    <visual>
+      <geometry>
+       <!--- 0.0 0 -0.04 -->
+       <mesh filename="package://mycobot_description/meshes/joint4_v2.dae"/>
+      </geometry>
+      <!-- <origin xyz = "0.0 0 0.03056 " rpy = " 0 -1.5708 0"/> -->
+      <origin xyz = "0.0 0 0.0" rpy = "0 1.57 1.57"/>
+    </visual>
+    <collision>
+      <geometry>
+       <!-- <cylinder length="0.1368" radius="0.021"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint4.stl"/>
+      </geometry>
+      <!-- <origin xyz = "-0.05 0 0" rpy = "0 1.57 0"/> -->
+      <!-- <origin xyz = "0.0 0 0.03056 " rpy = " 0 -1.5708 0"/> -->
+      <origin xyz = "0.0 0 0" rpy = "0 1.57 1.57"/>
+    </collision>
+        <inertial>
+      <mass value="0.072"/>
+      <origin xyz = "0.05 0 0.025" rpy = "0 1.57 0"/>
+      <inertia ixx="0.00012022344" ixy="0" ixz="0" iyy="0.00012022344" iyz="0" izz="1.5876000000000002e-05"/>
+    </inertial>
+  </link>
+
+
+  <link name="joint5">
+    <visual>
+      <geometry>
+       <mesh filename="package://mycobot_description/meshes/joint5_v2.dae"/>
+      </geometry>
+    <origin xyz = "0.0 0 0" rpy = "1.57 0  -1.57"/>
+    </visual>
+    <collision>
+       <geometry>
+       <!-- <cylinder length="0.05" radius="0.0193"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint5.stl"/>
+      </geometry>
+       <!-- <origin xyz = "0 0 -0.005" rpy = "0 0 0"/> -->
+       <origin xyz = "0.0 0 0" rpy = "1.57 0  -1.57"/>
+    </collision>
+        <inertial>
+      <mass value="0.072"/>
+      <origin xyz = "0 0 -0.03" rpy = "0 0 0"/>
+      <inertia ixx="2.170482e-05" ixy="0" ixz="0" iyy="2.170482e-05" iyz="0" izz="1.340964e-05"/>
+    </inertial>
+  </link>
+
+
+  <link name="joint6">
+    <visual>
+      <geometry>
+       <mesh filename="package://mycobot_description/meshes/joint6_v2.dae"/>
+      </geometry>
+    <origin xyz = "0 0 0 " rpy = "-1.57 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+       <!-- <cylinder length="0.05" radius="0.0192"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint6.stl"/>
+      </geometry>
+    <!-- <origin xyz = "0 0.0 -0.01" rpy = " 0 0 0"/> -->
+    <origin xyz = "0 0.0 0" rpy = "-1.57 0 0"/>
+    </collision>
+        <inertial>
+      <mass value="0.072"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="2.1635519999999998e-05" ixy="0" ixz="0" iyy="2.1635519999999998e-05" iyz="0" izz="1.3271039999999997e-05"/>
+    </inertial>
+  </link>
+
+
+  <link name="joint6_flange">
+    <visual>
+      <geometry>
+       <mesh filename="package://mycobot_description/meshes/joint7_v2.dae"/>
+      </geometry>
+    <origin xyz = "0.0 0 0" rpy = "1.57 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+       <!-- <cylinder length="0.0137" radius="0.0192"/> -->
+       <mesh filename="package://mycobot_description/meshes/joint7.stl"/>
+      </geometry>
+    <!-- <origin xyz = "0.0 0 -0.00685 " rpy = " 0 0 0"/> -->
+    <origin xyz = "0.0 0 0" rpy = "1.57 0 0"/>
+    </collision>
+        <inertial>
+      <mass value="0.072"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="7.761659999999998e-06" ixy="0" ixz="0" iyy="7.761659999999998e-06" iyz="0" izz="1.3271039999999997e-05"/>
+    </inertial>
+  </link>
+
+    <joint name="world_to_g_base" type="fixed">
+    <parent link="${arm_parent}"/>
+    <child link="g_base"/>
+    <origin xyz= "0 0 0" rpy = "0 0 0"/>  
+  </joint>
+
+
+  <joint name="g_base_to_joint1" type="fixed">
+    <axis xyz="0 0 0"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="g_base"/>
+    <child link="joint1"/>
+    <origin xyz= "0 0 0" rpy = "0 0 0"/>  
+  </joint>
+
+
+  <joint name="joint2_to_joint1" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="joint1"/>
+    <child link="joint2"/>
+    <origin xyz= "0 0 0.071304" rpy = "0 0 0"/>  
+    <dynamics damping="0" friction="0"/>
+  </joint>
+
+
+  <joint name="joint3_to_joint2" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="joint2"/>
+    <child link="joint3"/>
+    <!-- <origin xyz= "0 0  0" rpy = "0 1.5708 -1.5708"/>  -->
+    <origin xyz= "0.032495 0  0.059682" rpy = "0 0 0"/> 
+    <dynamics damping="0" friction="0"/> 
+  </joint>
+
+
+  <joint name="joint4_to_joint3" type="revolute">
+    <axis xyz=" 0 0 1"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="joint3"/>
+    <child link="joint4"/>
+    <!-- <origin xyz= "  -0.1104 0 0   " rpy = "0 0 0"/>   -->
+    <origin xyz= "0 0 0.110359" rpy = "0 -1.57 0"/>  
+    <dynamics damping="0" friction="0"/>
+  </joint>
+
+
+
+  <joint name="joint5_to_joint4" type="revolute">
+    <axis xyz=" 0 0 1"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="joint4"/>
+    <child link="joint5"/>
+    <!-- <origin xyz= "-0.096 0 0.06462" rpy = "0 0 -1.5708"/>   -->
+    <origin xyz= "0.096139 0 0" rpy = "0 0 0"/>  
+    <dynamics damping="0" friction="0"/>
+  </joint>
+
+  <joint name="joint6_to_joint5" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="joint5"/>
+    <child link="joint6"/>
+    <origin xyz= "0.035 0.0 -0.0335" rpy = "0 1.57 0"/> 
+    <dynamics damping="0" friction="0"/> 
+  </joint>
+
+  <joint name="joint6output_to_joint6" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort = "10.0" lower = "-3.14" upper = "3.14159" velocity = "1.0"/>
+    <parent link="joint6"/>
+    <child link="joint6_flange"/>
+    <origin xyz= "0 0.036 0.038" rpy = "1.57 0 0"/>  
+    <dynamics damping="0" friction="0"/>
+  </joint>
+
+
+     <xacro:robotiq_85_gripper prefix="" parent="joint6_flange" in_scale="0.5">
+       <origin xyz="0 0 -0.015" rpy="0 1.57 0"/>
+   </xacro:robotiq_85_gripper>
+
+
+   <!-- <xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
+
+   <xacro:sensor_r430 prefix="wrist_rgbd" parent="g_base" >
+       <origin xyz="0.5 0.75 0.1" rpy="0 ${pi/6} ${-pi/2}"/>
+   </xacro:sensor_r430> -->
+
+
+
+  <ros2_control name="arm_system" type="system">
+			<hardware>
+				<plugin>ign_ros2_control/IgnitionSystem</plugin>
+	    	</hardware>
+
+	    	<joint name="joint2_to_joint1">
+	    		<command_interface name="position">
+	    			<param name="min">-3.14</param>
+	    			<param name="max">3.14159</param>
+	    		</command_interface>
+	    		<state_interface name="position">
+                  <param name="initial_value">0.0</param>
+                </state_interface>
+	    		<state_interface name="velocity"/>
+	    		<state_interface name="effort"/>
+	    	</joint>
+
+            <joint name="joint3_to_joint2">
+	    		<command_interface name="position">
+	    			<param name="min">-3.14</param>
+	    			<param name="max">3.14159</param>
+	    		</command_interface>
+	    		<state_interface name="position">
+                  <param name="initial_value">0.0</param>
+                </state_interface>
+	    		<state_interface name="velocity"/>
+	    		<state_interface name="effort"/>
+	    	</joint>
+
+            <joint name="joint4_to_joint3">
+	    		<command_interface name="position">
+	    			<param name="min">-3.14</param>
+	    			<param name="max">3.14159</param>
+	    		</command_interface>
+	    		<state_interface name="position">
+                  <param name="initial_value">0.0</param>
+                </state_interface>
+	    		<state_interface name="velocity"/>
+	    		<state_interface name="effort"/>
+	    	</joint>
+
+            <joint name="joint5_to_joint4">
+	    		<command_interface name="position">
+	    			<param name="min">-3.14</param>
+	    			<param name="max">3.14159</param>
+	    		</command_interface>
+	    		<state_interface name="position">
+                  <param name="initial_value">0.0</param>
+                </state_interface>
+	    		<state_interface name="velocity"/>
+	    		<state_interface name="effort"/>
+	    	</joint>
+
+            <joint name="joint6_to_joint5">
+	    		<command_interface name="position">
+	    			<param name="min">-3.14</param>
+	    			<param name="max">3.14159</param>
+	    		</command_interface>
+	    		<state_interface name="position">
+                  <param name="initial_value">0.0</param>
+                </state_interface>
+	    		<state_interface name="velocity"/>
+	    		<state_interface name="effort"/>
+	    	</joint>
+
+             <joint name="joint6output_to_joint6">
+	    		<command_interface name="position">
+	    			<param name="min">-3.14</param>
+	    			<param name="max">3.14159</param>
+	    		</command_interface>
+	    		<state_interface name="position">
+                  <param name="initial_value">0.0</param>
+                </state_interface>
+	    		<state_interface name="velocity"/>
+	    		<state_interface name="effort"/>
+	    	</joint>
+
+	  	</ros2_control>
+
+    <gazebo>
+        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+            <robot_sim_type>ign_ros2_control/IgnitionSystem</robot_sim_type>
+            <parameters>$(find mycobot_gazebo)/config/controller_configuration_gripper.yaml</parameters>            
+        </plugin>
+    </gazebo>
+
+</xacro:macro>
+
+</robot>
+

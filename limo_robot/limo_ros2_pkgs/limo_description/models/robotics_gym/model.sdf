@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.6">
+    <model name="robotics_gym">
+        <static>true</static>
+        <link name="base_link">
+            <collision name="collision">
+                <geometry>
+                    <mesh>
+                        <uri>meshes/my_robotics_gym.dae</uri>
+                    </mesh>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>meshes/my_robotics_gym.dae</uri>
+                    </mesh>
+                </geometry>
+                <material>
+                    <ambient>0.56 0.15 0.15 0.77</ambient>
+                    <ambient>0.56 0.15 0.15 0.77</ambient>
+                    <ambient>0.56 0.15 0.15 0.77</ambient>
+                </material>
+            </visual> 
+        </link>
+    </model>
+</sdf>

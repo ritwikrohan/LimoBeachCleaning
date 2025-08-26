@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <include file="$(find-pkg-share limo_description)/launch/gazebo_models_diff_mod_arm.launch.py"/>
+
+    <include file="$(find-pkg-share mycobot_gazebo)/launch/start_gripper_control.launch.py"/>
+
+ros2 run attach_gazebo attach_client_v2_node joint6_flange grasp_box -0.12
+
+</launch>

@@ -1,0 +1,7 @@
+---
+# https://github.com/ouster-lidar/ouster-ros/blob/ros2/README.md#overview
+  - ros_topic_name: <robot_namespace><device_namespace>/ouster/points
+    gz_topic_name: <robot_namespace><device_namespace>/ouster/points/points
+    ros_type_name: sensor_msgs/msg/PointCloud2
+    gz_type_name: ignition.msgs.PointCloudPacked
+    lazy: true

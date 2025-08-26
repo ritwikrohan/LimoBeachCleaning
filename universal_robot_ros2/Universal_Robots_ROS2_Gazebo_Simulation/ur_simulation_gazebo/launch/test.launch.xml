@@ -1,0 +1,22 @@
+<launch>
+
+    <arg name="turning_speed" default="0.2"/>
+    <arg name="forward_speed" default="0.1"/>
+    <arg name="rviz_config_file_name" default="launch_part.rviz"/>
+    <arg name="custom_namespace" default="gypsi_danger"/>
+
+
+    <include file="$(find-pkg-share launch_tests_pkg)/launch/start_rviz_with_arguments.launch.py">
+        <arg name="rviz_config_file_name" value="$(var rviz_config_file_name)"/>
+    </include>
+
+
+  <group>
+    <push-ros-namespace namespace="$(var custom_namespace)"/>
+    <include file="$(find-pkg-share launch_tests_pkg)/launch/move_with_arguments.launch.xml">
+        <arg name="turning_speed" value="$(var turning_speed)"/>
+        <arg name="forward_speed" value="$(var forward_speed)"/>
+    </include>
+  </group>
+
+</launch>

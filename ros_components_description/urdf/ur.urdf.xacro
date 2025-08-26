@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+
+<!--
+# Copyright 2024 Husarion. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+
+<robot name="ur" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="ur"
+    params="parent_link xyz rpy
+          device_namespace:=None
+          ur_type:=ur3e">
+
+    <xacro:include
+      filename="$(find ur_description)/urdf/ur_macro.xacro"
+      ns="ur_manipulator"
+    />
+
+    <xacro:if value="${device_namespace == 'None'}">
+      <xacro:property name="prefix" value="" />
+    </xacro:if>
+    <xacro:unless value="${device_namespace == 'None'}">
+      <xacro:property name="prefix" value="${device_namespace}_" />
+    </xacro:unless>
+
+    <xacro:property name="joint_limit_params"
+      value="$(find ur_description)/config/${ur_type}/joint_limits.yaml" scope="parent" />
+    <xacro:property name="kinematics_params"
+      value="$(find ur_description)/config/${ur_type}/default_kinematics.yaml" scope="parent" />
+    <xacro:property name="physical_params"
+      value="$(find ur_description)/config/${ur_type}/physical_parameters.yaml" scope="parent" />
+    <xacro:property name="visual_params"
+      value="$(find ur_description)/config/${ur_type}/visual_parameters.yaml" scope="parent" />
+    <xacro:property name="simulation_controllers"
+      value="$(find ros_components_description)/config/ur_controllers.yaml" scope="parent" />
+
+      <xacro:property name="initial_positions_file" default="$(find ur_description)/config/initial_positions.yaml" />
+      <xacro:property name="initial_positions"
+        value="${xacro.load_yaml(initial_positions_file)}" scope="parent" />
+
+    <xacro:ur_manipulator.ur_robot
+      name="${ur_type}"
+      tf_prefix="${prefix}"
+      parent="${parent_link}"
+      joint_limits_parameters_file="${joint_limit_params}"
+      kinematics_parameters_file="${kinematics_params}"
+      physical_parameters_file="${physical_params}"
+      visual_parameters_file="${visual_params}"
+      sim_ignition="true"
+      generate_ros2_control_tag="false"
+    >
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </xacro:ur_manipulator.ur_robot>
+
+
+    <ros2_control name="${prefix + ur_type}" type="system">
+      <hardware>
+        <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      </hardware>
+      <joint name="${prefix}shoulder_pan_joint">
+        <command_interface name="position">
+          <param name="min">{-2*pi}</param>
+          <param name="max">{2*pi}</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.15</param>
+          <param name="max">3.15</param>
+        </command_interface>
+        <state_interface name="position">
+          <!-- initial position for the FakeSystem and simulation -->
+          <param name="initial_value">${initial_positions['shoulder_pan_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="${prefix}shoulder_lift_joint">
+        <command_interface name="position">
+          <param name="min">{-2*pi}</param>
+          <param name="max">{2*pi}</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.15</param>
+          <param name="max">3.15</param>
+        </command_interface>
+        <state_interface name="position">
+          <!-- initial position for the FakeSystem and simulation -->
+          <param name="initial_value">${initial_positions['shoulder_lift_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="${prefix}elbow_joint">
+        <command_interface name="position">
+          <param name="min">{-pi}</param>
+          <param name="max">{pi}</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.15</param>
+          <param name="max">3.15</param>
+        </command_interface>
+        <state_interface name="position">
+          <!-- initial position for the FakeSystem and simulation -->
+          <param name="initial_value">${initial_positions['elbow_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="${prefix}wrist_1_joint">
+        <command_interface name="position">
+          <param name="min">{-2*pi}</param>
+          <param name="max">{2*pi}</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.2</param>
+          <param name="max">3.2</param>
+        </command_interface>
+        <state_interface name="position">
+          <!-- initial position for the FakeSystem and simulation -->
+          <param name="initial_value">${initial_positions['wrist_1_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="${prefix}wrist_2_joint">
+        <command_interface name="position">
+          <param name="min">{-2*pi}</param>
+          <param name="max">{2*pi}</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.2</param>
+          <param name="max">3.2</param>
+        </command_interface>
+        <state_interface name="position">
+          <!-- initial position for the FakeSystem and simulation -->
+          <param name="initial_value">${initial_positions['wrist_2_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="${prefix}wrist_3_joint">
+        <command_interface name="position">
+          <param name="min">{-2*pi}</param>
+          <param name="max">{2*pi}</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.2</param>
+          <param name="max">3.2</param>
+        </command_interface>
+        <state_interface name="position">
+          <!-- initial position for the FakeSystem and simulation -->
+          <param name="initial_value">${initial_positions['wrist_3_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+
+    </ros2_control>
+  </xacro:macro>
+</robot>

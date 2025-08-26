@@ -1,0 +1,41 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/jagadeesh/detect/install/rosbot_hardware_interfaces/include/**",
+        "/home/jagadeesh/detect/install/micro_ros_agent/include/**",
+        "/home/jagadeesh/detect/install/micro_ros_msgs/include/**",
+        "/home/jagadeesh/detect/install/mecanum_drive_controller/include/**",
+        "/home/jagadeesh/detect/install/imu_sensor_broadcaster/include/**",
+        "/home/jagadeesh/detect/install/diff_drive_controller/include/**",
+        "/home/jagadeesh/turtle_ws/install/turtlebot3_gazebo/include/**",
+        "/home/jagadeesh/turtle_ws/install/turtlebot3_fake_node/include/**",
+        "/home/jagadeesh/ros2_ws/install/turtlesim/include/**",
+        "/home/jagadeesh/ros2_ws/install/sdformat_urdf/include/**",
+        "/home/jagadeesh/ros2_ws/install/ros_ign_interfaces/include/**",
+        "/home/jagadeesh/ros2_ws/install/ros_gz_sim/include/**",
+        "/home/jagadeesh/ros2_ws/install/ros_gz_bridge/include/**",
+        "/home/jagadeesh/ros2_ws/install/ros_gz_interfaces/include/**",
+        "/home/jagadeesh/ros2_ws/install/micro_ros_agent/include/**",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/jagadeesh/detect/src/diff_drive_controller/include/**",
+        "/home/jagadeesh/detect/src/husarion_controllers/mecanum_drive_controller/include/**",
+        "/home/jagadeesh/detect/src/imu_sensor_broadcaster/include/**",
+        "/home/jagadeesh/detect/src/micro-ROS-Agent/micro_ros_agent/include/**",
+        "/home/jagadeesh/detect/src/rosbot_hardware_interfaces/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

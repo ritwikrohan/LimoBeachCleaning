@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="slamtec_rplidar_s2"
+               params="parent_link xyz rpy
+                       namespace:=None
+                       device_namespace:=None ">
+
+    <xacro:if value="${namespace == 'None'}">
+      <xacro:property name="ns" value="" />
+    </xacro:if>
+    <xacro:unless value="${namespace == 'None'}">
+      <xacro:property name="ns" value="${namespace}/" />
+    </xacro:unless>
+
+    <xacro:if value="${device_namespace == 'None'}">
+      <xacro:property name="device_ns" value="" />
+    </xacro:if>
+    <xacro:unless value="${device_namespace == 'None'}">
+      <xacro:property name="device_ns" value="${device_namespace}/" />
+    </xacro:unless>
+
+    <xacro:if value="${device_namespace == 'None'}">
+      <xacro:property name="prefix" value="" />
+    </xacro:if>
+    <xacro:unless value="${device_namespace == 'None'}">
+      <xacro:property name="prefix" value="${device_namespace}_" />
+    </xacro:unless>
+
+    <joint name="${parent_link.rstrip('_link')}_to_${prefix}slamtec_rplidar_s2_joint" type="fixed">
+      <origin xyz="${xyz}" rpy="${rpy}" />
+      <parent link="${parent_link}" />
+      <child link="${prefix}slamtec_rplidar_s2_link" />
+    </joint>
+
+    <link name="${prefix}slamtec_rplidar_s2_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <mesh filename="package://ros_components_description/meshes/slamtec_rplidar_s2.dae" />
+        </geometry>
+      </visual>
+
+      <!-- base and head collision -->
+      <collision>
+        <origin xyz="0.0 0.0 ${0.038857/2.0}" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <box size="0.077 0.076856 0.038857" />
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0.0 -0.000021 ${0.038857/2.0 + 0.0017953}" rpy="0.0 0.0 0.0" />
+        <mass value="0.104949" />
+        <inertia ixx="0.00005071491" ixy="0.0"            ixz="0.0"
+                                     iyy="0.00005064080"  iyz="0.0"
+                                                          izz="0.000075682018" />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}slamtec_rplidar_s2_to_${prefix}laser_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.0285" rpy="0.0 0.0 ${pi}" />
+      <parent link="${prefix}slamtec_rplidar_s2_link" />
+      <child link="${prefix}laser" />
+    </joint>
+
+    <link name="${prefix}laser" />
+
+    <gazebo reference="${prefix}laser">
+      <!-- gpu_lidar has to be set, CPU lidar doesn't work in ignition -
+      https://github.com/gazebosim/gz-sensors/issues/26 -->
+      <sensor type="gpu_lidar" name="${ns}${prefix}slamtec_rplidar_s2_sensor">
+
+        <topic>${ns}${device_ns}scan</topic>
+        <frame_id>${ns}${prefix}laser</frame_id>
+        <ignition_frame_id>${ns}${prefix}laser</ignition_frame_id>
+
+        <update_rate>10.0</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>3000</samples>
+              <resolution>1</resolution>
+              <min_angle>-${pi}</min_angle>
+              <max_angle>${pi}</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.05</min>
+            <max>30.0</max>
+            <resolution>0.03</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </ray>
+        <always_on>1</always_on>
+        <visualize>false</visualize>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

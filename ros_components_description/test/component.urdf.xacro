@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="component" xmlns:xacro="http://wiki.ros.org/xacro">
+  <link name="cover_link" />
+
+  <xacro:arg name="components_config_path" default="None" />
+  <xacro:property name="components_config_path_property" value="$(arg components_config_path)" />
+  <xacro:unless value="${components_config_path_property == 'None'}">
+    <xacro:include filename="$(find ros_components_description)/urdf/components.urdf.xacro"
+      ns="husarion_components" />
+
+    <xacro:husarion_components.create_components
+      components_config_path="${components_config_path_property}"
+      namespace="None"
+    />
+  </xacro:unless>
+
+</robot>

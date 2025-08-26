@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="create_components"
+    params="components_config_path namespace">
+
+    <xacro:unless value="${components_config_path == 'None'}">
+      <xacro:property name="components_config"
+        value="${xacro.load_yaml(components_config_path)}" />
+      <xacro:load_componenet
+        config="${components_config}"
+        counter="${len(components_config['components'])}"
+        robot_namespace="${namespace}" />
+
+    </xacro:unless>
+  </xacro:macro>
+
+  <xacro:macro name="load_componenet"
+    params="config counter robot_namespace">
+    <xacro:if value="${counter}">
+      <xacro:property name="index" value="${counter - 1}" scope="parent" />
+      <xacro:property name="component" value="${config['components'][index]}" scope="parent" />
+
+      <xacro:property name="type" value="${component['type']}" scope="parent" />
+      <xacro:property name="parent_link" value="${component['parent_link']}" scope="parent" />
+      <xacro:property name="xyz" value="${component['xyz']}" scope="parent" />
+      <xacro:property name="rpy" value="${component['rpy']}" scope="parent" />
+      <xacro:property name="device_namespace" value="${component['device_namespace']}"
+        scope="parent" />
+
+        <xacro:if value="${robot_namespace == ''}">
+          <xacro:property name="ns" value="None" scope="parent" />
+        </xacro:if>
+        <xacro:unless value="${robot_namespace == ''}">
+          <xacro:property name="ns" value="${robot_namespace}" scope="parent" />
+        </xacro:unless>
+
+      <xacro:if value="${type == 'CAM01'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/orbbec_astra.urdf.xacro"
+          ns="camera" />
+
+        <xacro:camera.orbbec_astra
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+        />
+      </xacro:if>
+
+      <xacro:property name="zed_models_dict"
+        value="${dict ([
+        ('CAM03', 'zed2'),
+        ('CAM04', 'zed2i'),
+        ('CAM06', 'zedx'),
+        ])}" />
+
+        <xacro:if value="${type in zed_models_dict}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/stereolabs_zed.urdf.xacro"
+          ns="camera" />
+
+        <xacro:camera.zed_camera
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+          model="${zed_models_dict[type]}"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'LDR01'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/slamtec_rplidar_s1.urdf.xacro"
+          ns="lidar"
+        />
+
+        <xacro:lidar.slamtec_rplidar_s1
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'LDR06'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/slamtec_rplidar_s3.urdf.xacro"
+          ns="lidar"
+        />
+
+        <xacro:lidar.slamtec_rplidar_s3
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+        />
+      </xacro:if>
+
+      <xacro:property name="ouster_models_dict"
+        value="${dict ([
+        ('LDR10', 'os0_32'),
+        ('LDR11', 'os0_64'),
+        ('LDR12', 'os0_128'),
+        ('LDR13', 'os1_32'),
+        ('LDR14', 'os1_64'),
+        ('LDR15', 'os1_128')
+      ])}" />
+
+      <xacro:if value="${type in ouster_models_dict}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/ouster.urdf.xacro"
+          ns="lidar"
+        />
+        <xacro:lidar.ouster
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+          model="${ouster_models_dict[type]}"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'LDR20'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/velodyne_puck.urdf.xacro"
+          ns="lidar"
+        />
+
+        <xacro:lidar.velodyne_puck
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'MAN01'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/ur.urdf.xacro"
+          ns="manipulator"
+        />
+
+        <xacro:manipulator.ur
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          device_namespace="${device_namespace}"
+          ur_type="ur3e"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'MAN02'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/ur.urdf.xacro"
+          ns="manipulator"
+        />
+
+        <xacro:manipulator.ur
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          device_namespace="${device_namespace}"
+          ur_type="ur5e"
+        />
+      </xacro:if>
+
+
+      <xacro:if value="${type == 'MAN04'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/kinova.urdf.xacro"
+          ns="manipulator"
+        />
+
+        <xacro:manipulator.kinova
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+          kinova_type="gen3"
+          dof="6"
+          gripper="robotiq_2f_85"
+          vision="false"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'MAN05'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/kinova.urdf.xacro"
+          ns="manipulator"
+        />
+
+        <xacro:manipulator.kinova
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+          kinova_type="gen3"
+          dof="6"
+          gripper="robotiq_2f_85"
+          vision="true"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'MAN06'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/kinova.urdf.xacro"
+          ns="manipulator"
+        />
+
+        <xacro:manipulator.kinova
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+          kinova_type="gen3"
+          dof="7"
+          gripper="robotiq_2f_85"
+          vision="false"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'MAN07'}">
+        <xacro:include
+          filename="$(find ros_components_description)/urdf/kinova.urdf.xacro"
+          ns="manipulator"
+        />
+
+        <xacro:manipulator.kinova
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          kinova_type="gen3"
+          dof="7"
+          gripper="robotiq_2f_85"
+          vision="true"
+          device_namespace="${device_namespace}"
+        />
+      </xacro:if>
+
+      <xacro:if value="${type == 'GRP02'}">
+        <xacro:include filename="$(find ros_components_description)/urdf/robotiq.urdf.xacro"
+          ns="gripper" />
+
+        <xacro:gripper.robotiq
+          parent_link="${parent_link}"
+          xyz="${xyz}"
+          rpy="${rpy}"
+          namespace="${ns}"
+          device_namespace="${device_namespace}"
+          robotiq_type="2f_85"
+        />
+      </xacro:if>
+
+      <xacro:if value="${index}">
+        <xacro:load_componenet
+          counter="${index}"
+          config="${config}"
+          robot_namespace="${robot_namespace}"
+        />
+      </xacro:if>
+    </xacro:if>
+  </xacro:macro>
+</robot>

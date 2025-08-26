@@ -1,0 +1,42 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/jagadeesh/detect/install/yolo/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_utils/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_gazebo/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_bringup/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_controller/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/micro_ros_msgs/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/turtle_ws/install/lab5/lib/python3.10/site-packages",
+        "/home/jagadeesh/turtle_ws/install/lab4/lib/python3.10/site-packages",
+        "/home/jagadeesh/turtle_ws/install/group_project/lib/python3.10/site-packages",
+        "/home/jagadeesh/ros2_ws/install/turtlesim/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ros_ign_interfaces/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_ros/lib/python3.10/site-packages",
+        "/home/jagadeesh/ros2_ws/install/ros_gz_interfaces/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_dds_tests/lib/python3.10/site-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_sitl/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_msgs/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/jagadeesh/detect/install/yolo/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_utils/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_gazebo/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_bringup/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/rosbot_xl_controller/lib/python3.10/site-packages",
+        "/home/jagadeesh/detect/install/micro_ros_msgs/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/turtle_ws/install/lab5/lib/python3.10/site-packages",
+        "/home/jagadeesh/turtle_ws/install/lab4/lib/python3.10/site-packages",
+        "/home/jagadeesh/turtle_ws/install/group_project/lib/python3.10/site-packages",
+        "/home/jagadeesh/ros2_ws/install/turtlesim/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ros_ign_interfaces/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_ros/lib/python3.10/site-packages",
+        "/home/jagadeesh/ros2_ws/install/ros_gz_interfaces/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_dds_tests/lib/python3.10/site-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_sitl/local/lib/python3.10/dist-packages",
+        "/home/jagadeesh/ros2_ws/install/ardupilot_msgs/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

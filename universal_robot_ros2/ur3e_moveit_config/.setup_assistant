@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: ur_description
+    relative_path: urdf/ur.urdf.xacro
+  srdf:
+    relative_path: config/name.srdf
+  package_settings:
+    author_name: aezquerro
+    author_email: aezquerro@theconstructsim.com
+    generated_timestamp: 1693503750

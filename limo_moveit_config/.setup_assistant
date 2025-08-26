@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: limo_description
+    relative_path: urdf/limo_four_diff_arm.xacro
+  srdf:
+    relative_path: config/limo_four_diff.srdf
+  package_settings:
+    author_name: Ritwik Rohan
+    author_email: ritwik@asimovo.com
+    generated_timestamp: 1722557865
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

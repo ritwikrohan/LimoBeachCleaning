@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<robot name="robotiq_85_gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="box_inertia" params="mass x y z">
+      <inertia  ixx="${mass*(y*y+z*z)/12.0}" ixy = "0" ixz = "0"
+                iyy="${mass*(x*x+z*z)/12.0}" iyz = "0"
+                izz="${mass*(x*x+z*z)/12.0}"
+      />
+    </xacro:macro>
+
+
+        <xacro:macro name="robotiq_85_gripper" params="prefix parent in_scale *origin">
+
+                <joint name="${prefix}robotiq_85_base_joint" type="fixed">
+                        <parent link="${parent}"/>
+                        <child link="${prefix}robotiq_85_base_link"/>
+                        <xacro:insert_block name="origin"/>
+                </joint>
+
+                <link name="${prefix}robotiq_85_base_link">
+                        <visual>
+                                <origin xyz="${in_scale * 0.16} 0 0" rpy="0 0 0" />
+                                <geometry>
+                                        <sphere radius="${in_scale * 0.007}"/>
+                                </geometry>
+                                <material name="">
+                                        <color rgba="0 1.0 0 1.0"/>
+                                </material>
+                        </visual>
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_base_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_base_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.636951}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.636951}" x="${0.047 * in_scale}" y="${0.0424 * in_scale}" z="${0.0375 * in_scale}" />
+                        </inertial>
+                </link>
+
+                <joint name="${prefix}robotiq_85_left_knuckle_joint" type="revolute">
+                        <parent link="${prefix}robotiq_85_base_link"/>
+                        <child link="${prefix}robotiq_85_left_knuckle_link"/>
+                        <axis xyz="0 0 1"/>
+                        <origin rpy="${pi} 0.0 0.0" xyz="${0.05490451627 * in_scale} ${0.03060114443 * in_scale} 0.0"/>
+                        <limit lower="0.0" upper="0.804" velocity="0.5" effort="50.0"/>
+                        <!-- <dynamics damping="100.0" /> -->
+                </joint>
+
+
+                <gazebo reference="${prefix}robotiq_85_left_knuckle_link">
+                        <kp>1000000.0</kp>
+                        <kd>100.0</kd>
+                        <mu1>30.0</mu1>
+                        <mu2>30.0</mu2>
+                        <maxVel>1.0</maxVel>
+                        <minDepth>0.001</minDepth>
+                        <material>Gazebo/Grey</material>
+                </gazebo>
+
+        <link name="${prefix}robotiq_85_left_knuckle_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.018491}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.018491}" x="${0.023 * in_scale}" y="${0.046 * in_scale}" z="${0.024 * in_scale}" />
+                        </inertial>
+                </link>
+
+                <joint name="${prefix}robotiq_85_right_knuckle_joint" type="continuous">
+                        <parent link="${prefix}robotiq_85_base_link"/>
+                        <child link="${prefix}robotiq_85_right_knuckle_link"/>
+                        <axis xyz="0 0 1"/>
+                        <origin rpy="0.0 0.0 0.0" xyz="${0.05490451627 * in_scale} ${-0.03060114443 * in_scale} 0.0"/>
+                        <limit lower="-3.14" upper="3.14" velocity="100.0" effort="50"/>
+                        <mimic joint="${prefix}robotiq_85_left_knuckle_joint"/>
+                        <!-- <dynamics damping="100.0" /> -->
+                </joint>
+
+                <gazebo reference="${prefix}robotiq_85_right_knuckle_link">
+                        <kp>1000000.0</kp>
+                        <kd>100.0</kd>
+                        <mu1>30.0</mu1>
+                        <mu2>30.0</mu2>
+                        <maxVel>1.0</maxVel>
+                        <minDepth>0.001</minDepth>
+                        <material>Gazebo/Grey</material>
+                </gazebo>
+
+
+
+                <link name="${prefix}robotiq_85_right_knuckle_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.018491}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.018491}" x="${0.023 * in_scale}" y="${0.046 * in_scale}" z="${0.024 * in_scale}" />
+                        </inertial>
+                </link>
+
+                <joint name="${prefix}robotiq_85_left_finger_joint" type="fixed">
+                        <parent link="${prefix}robotiq_85_left_knuckle_link"/>
+                        <child link="${prefix}robotiq_85_left_finger_link"/>
+                        <origin xyz="${in_scale * -0.00408552455} ${in_scale * -0.03148604435} 0.0" rpy="0 0 0" />
+                </joint>
+
+
+                <joint name="${prefix}robotiq_85_right_finger_joint" type="fixed">
+                        <parent link="${prefix}robotiq_85_right_knuckle_link"/>
+                        <child link="${prefix}robotiq_85_right_finger_link"/>
+                        <origin xyz="${in_scale * -0.00408552455} ${in_scale * -0.03148604435} 0.0" rpy="0 0 0" />
+                </joint>
+
+
+                <link name="${prefix}robotiq_85_left_finger_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.027309}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.027309}" x="${0.059 * in_scale}" y="${0.018 * in_scale}" z="${0.027 * in_scale}" />
+                        </inertial>
+                </link>
+
+
+                <link name="${prefix}robotiq_85_right_finger_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.027309}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.027309}" x="${0.059 * in_scale}" y="${0.018 * in_scale}" z="${0.027 * in_scale}" />
+                        </inertial>
+                </link>
+
+
+                <joint name="${prefix}robotiq_85_left_inner_knuckle_joint" type="continuous">
+                        <parent link="${prefix}robotiq_85_base_link"/>
+                        <child link="${prefix}robotiq_85_left_inner_knuckle_link"/>
+                        <axis xyz="0 0 1"/>
+                        <origin xyz="${in_scale * 0.06142} ${in_scale * 0.0127} 0" rpy="${pi} 0.0 0.0" />
+                        <limit lower="-3.14" upper="3.14" velocity="100.0" effort="0.1"/>
+                        <mimic joint="${prefix}robotiq_85_left_knuckle_joint" offset="0"/>
+                </joint>
+
+                <joint name="${prefix}robotiq_85_right_inner_knuckle_joint" type="continuous">
+                        <parent link="${prefix}robotiq_85_base_link"/>
+                        <child link="${prefix}robotiq_85_right_inner_knuckle_link"/>
+                        <axis xyz="0 0 1"/>
+                        <origin xyz="${in_scale * 0.06142} ${in_scale * -0.0127} 0" rpy="0 0 0"/>
+                        <limit lower="-3.14" upper="3.14" velocity="100.0" effort="0.1"/>
+                        <mimic joint="${prefix}robotiq_85_left_knuckle_joint" offset="0"/>
+                </joint>
+
+                <link name="${prefix}robotiq_85_left_inner_knuckle_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                <mass value="${in_scale * 0.029951}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.029951}" x="${0.055 * in_scale}" y="${0.0496 * in_scale}" z="${0.039 * in_scale}" />
+                        </inertial>
+                </link>
+                <link name="${prefix}robotiq_85_right_inner_knuckle_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.029951}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.029951}" x="${0.055 * in_scale}" y="${0.0496 * in_scale}" z="${0.039 * in_scale}" />
+                        </inertial>
+                </link>
+
+                <joint name="${prefix}robotiq_85_left_finger_tip_joint" type="continuous">
+                        <parent link="${prefix}robotiq_85_left_inner_knuckle_link"/>
+                        <child link="${prefix}robotiq_85_left_finger_tip_link"/>
+                        <axis xyz="0 0 1"/>
+                        <origin xyz="${in_scale * 0.04303959807} ${in_scale * -0.03759940821} 0.0" rpy="0.0 0.0 0.0"/>
+                        <limit lower="-3.14" upper="3.14" velocity="100.0" effort="0.1"/>
+                        <mimic joint="${prefix}robotiq_85_left_knuckle_joint" multiplier="-1"/>
+                </joint>
+
+                <joint name="${prefix}robotiq_85_right_finger_tip_joint" type="continuous">
+                        <parent link="${prefix}robotiq_85_right_inner_knuckle_link"/>
+                        <child link="${prefix}robotiq_85_right_finger_tip_link"/>
+                        <axis xyz="0 0 1"/>
+                        <origin rpy="0.0 0.0 0.0" xyz="${in_scale * 0.04303959807} ${in_scale * -0.03759940821}  0.0"/>
+                        <limit lower="-3.14" upper="3.14" velocity="100.0" effort="0.1"/>
+                        <mimic joint="${prefix}robotiq_85_left_knuckle_joint" multiplier="-1"/>
+                </joint>
+
+                <link name="${prefix}robotiq_85_left_finger_tip_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.019555}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.029951}" x="${0.057 * in_scale}" y="${0.0317 * in_scale}" z="${0.022 * in_scale}" />
+                        </inertial>
+                </link>
+
+                <gazebo reference="${prefix}robotiq_85_left_finger_tip_link">
+                        <kp>1000000.0</kp>
+                        <kd>100.0</kd>
+                        <mu1>30.0</mu1>
+                        <mu2>30.0</mu2>
+                        <maxVel>1.0</maxVel>
+                        <minDepth>0.001</minDepth>
+                        <material>Gazebo/Grey</material>
+                </gazebo>
+                <link name="${prefix}robotiq_85_right_finger_tip_link">
+                        <visual>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <mesh filename="package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl" scale="${in_scale} ${in_scale} ${in_scale}"/>
+                                </geometry>
+                        </collision>
+                        <inertial>
+                                <mass value="${in_scale * 0.019555}" />
+                                <origin xyz="0.0 0.0 0.0" />
+                                <xacro:box_inertia mass="${in_scale * 0.029951}" x="${0.057 * in_scale}" y="${0.0317 * in_scale}" z="${0.022 * in_scale}" />
+                        </inertial>
+                </link>
+
+                <gazebo reference="${prefix}robotiq_85_right_finger_tip_link">
+                        <kp>1000000.0</kp>
+                        <kd>100.0</kd>
+                        <mu1>30.0</mu1>
+                        <mu2>30.0</mu2>
+                        <maxVel>1.0</maxVel>
+                        <minDepth>0.001</minDepth>
+                        <material>Gazebo/Grey</material>
+                </gazebo>
+
+
+                <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper_gz.ros2_control.xacro"/>
+
+                <xacro:robotiq_85_gripper_ros2_control name="RobotiqGripperSystem"/>
+
+
+        <!-- <gazebo>
+            <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+                <arm>
+                    <arm_name>my_gripper</arm_name>
+                    <palm_link>wrist_3_link</palm_link>
+                    <gripper_link> ${prefix}robotiq_85_left_finger_tip_link </gripper_link>
+                    <gripper_link> ${prefix}robotiq_85_right_finger_tip_link </gripper_link>
+                </arm>
+                <forces_angle_tolerance>100</forces_angle_tolerance>
+                <update_rate>10</update_rate>
+                <grip_count_threshold>3</grip_count_threshold>
+                <max_grip_count>10</max_grip_count>
+                <release_tolerance>0.001</release_tolerance>
+                <disable_collisions_on_attach>false</disable_collisions_on_attach>
+                <contact_topic>__default_topic__</contact_topic>
+            </plugin>
+        </gazebo> -->
+
+        </xacro:macro>
+</robot>

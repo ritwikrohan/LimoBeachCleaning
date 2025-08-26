@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- Name has to have this structure Mycobot_NUMBERSERIES_NUmberOfRobot-->
+    <arg name="robot_name" default="mycobot_280_1"/>
+    <!-- <arg name="robot_file" default="$(find-pkg-share mycobot_description)/urdf/mycobot/mycobot_urdf.urdf"/> -->
+    <arg name="robot_file" default="$(find-pkg-share mycobot_description)/urdf/mycobot/mycobot_urdf_gripper.urdf.xacro"/>
+    
+    <arg name="x_spawn" default="0.0"/>
+    <arg name="y_spawn" default="0.0"/>
+    <arg name="z_spawn" default="1.0"/>
+    <arg name="roll_spawn" default="0.0"/>
+    <arg name="pitch_spawn" default="0.0"/>
+    <arg name="yaw_spawn" default="0.0"/>
+
+    <include file="$(find-pkg-share mycobot_gazebo)/launch/robot_state_publisher.launch.py">
+        <arg name="robot_name" value="$(var robot_name)"/>
+        <arg name="robot_file" value="$(var robot_file)"/>
+    </include>
+
+
+    <include file="$(find-pkg-share mycobot_gazebo)/launch/spawn_in_gazebo.launch.py">
+        <arg name="robot_name" value="$(var robot_name)"/>
+        <arg name="x_spawn" value="$(var x_spawn)"/>
+        <arg name="y_spawn" value="$(var y_spawn)"/>
+        <arg name="z_spawn" value="$(var z_spawn)"/>
+        <arg name="roll_spawn" value="$(var roll_spawn)"/>
+        <arg name="pitch_spawn" value="$(var pitch_spawn)"/>
+        <arg name="yaw_spawn" value="$(var yaw_spawn)"/>
+    </include>
+    
+</launch>

@@ -1,0 +1,27 @@
+.vscode/*
+.devcontainer/*
+demo/.env
+demo/test/.env
+demo/id
+dev_utils/
+
+# ROS 2 build folders
+build/
+install/
+log/
+__pycache__/
+
+# ROSbots submodules
+rosbot_hardware_interfaces/
+ros_components_description/
+rosbot_controllers/
+husarion_gz_worlds
+micro-ROS-Agent/
+micro_ros_msgs/
+industrial_ci/
+ros2_controllers/
+diff_drive_controller/
+imu_sensor_broadcaster/
+
+# pyspelling
+*.dic

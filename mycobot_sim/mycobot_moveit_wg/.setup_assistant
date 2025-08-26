@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: mycobot_description
+    relative_path: urdf/mycobot/mycobot_urdf_gripper.urdf.xacro
+  srdf:
+    relative_path: config/firefighter.srdf
+  package_settings:
+    author_name: RDaneelOlivaw
+    author_email: duckfrost@theconstructsim.com
+    generated_timestamp: 1709923066
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

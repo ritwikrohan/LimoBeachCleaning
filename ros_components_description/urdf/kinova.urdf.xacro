@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+
+<!--
+# Copyright 2024 Husarion. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+
+<robot name="kinova" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="kinova"
+    params="parent_link xyz rpy
+          kinova_type:=gen3_lite
+          dof:=6
+          gripper:=''
+          vision:=false
+          namespace:=None
+          device_namespace:=None
+          ">
+
+    <xacro:include
+      filename="$(find kortex_description)/robots/kortex_robot.xacro"
+      ns="kinova_manipulator"
+    />
+
+    <xacro:if value="${namespace == 'None'}">
+      <xacro:property name="ns" value="" />
+    </xacro:if>
+    <xacro:unless value="${namespace == 'None'}">
+      <xacro:property name="ns" value="${namespace}/" />
+    </xacro:unless>
+
+    <xacro:if value="${device_namespace == 'None'}">
+      <xacro:property name="prefix" value="" />
+    </xacro:if>
+    <xacro:unless value="${device_namespace == 'None'}">
+      <xacro:property name="prefix" value="${device_namespace}_" />
+    </xacro:unless>
+
+    <!-- robot name parameter -->
+    <xacro:property name="name" value="kinova_arm" />
+
+    <!-- Arguments -->
+    <xacro:property name="robot_ip" value="192.168.11.11" />
+    <xacro:property name="username" value="admin" />
+    <xacro:property name="password" value="admin" />
+    <xacro:property name="port" value="10000" />
+    <xacro:property name="port_realtime" value="10001" />
+    <xacro:property name="session_inactivity_timeout_ms" value="60000" />
+    <xacro:property name="connection_inactivity_timeout_ms" value="2000" />
+    <xacro:property name="gripper_joint_name" value="robotiq_85_left_knuckle_joint" />
+    <xacro:property name="gripper_max_velocity" value="100.0" />
+    <xacro:property name="gripper_max_force" value="100.0" />
+    <xacro:property name="use_internal_bus_gripper_comm" value="false" />
+    <xacro:arg name="use_fake_hardware" default="false" />
+    <xacro:property name="use_fake_hardware" value="false" />
+    <xacro:arg name="fake_sensor_commands" default="false" />
+    <xacro:property name="fake_sensor_commands" value="false" />
+    <xacro:property name="gazebo_renderer" value="ogre" />
+    <xacro:property name="camera_width" value="640" />
+    <xacro:property name="camera_height" value="480" />
+    <xacro:property name="camera_fps" value="6" />
+
+
+    <!-- convert to property to use substitution in function -->
+    <xacro:property name="initial_positions_file"
+      value="$(find kortex_description)/config/initial_positions.yaml" />
+
+    <xacro:kinova_manipulator.load_robot
+      parent="${parent_link}"
+      arm="${kinova_type}"
+      gripper=""
+      gripper_joint_name="${gripper_joint_name}"
+      gripper_max_velocity="${gripper_max_velocity}"
+      gripper_max_force="${gripper_max_force}"
+      dof="${dof}"
+      vision="${vision}"
+      robot_ip="${robot_ip}"
+      username="${username}"
+      password="${password}"
+      port="${port}"
+      port_realtime="${port_realtime}"
+      session_inactivity_timeout_ms="${session_inactivity_timeout_ms}"
+      connection_inactivity_timeout_ms="${connection_inactivity_timeout_ms}"
+      use_internal_bus_gripper_comm="${use_internal_bus_gripper_comm}"
+      prefix="${prefix}"
+      sim_ignition="true"
+      use_fake_hardware="${use_fake_hardware}"
+      fake_sensor_commands="${fake_sensor_commands}"
+    >
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </xacro:kinova_manipulator.load_robot>
+
+    <!-- Include and load the gripper if defined -->
+    <xacro:unless value="${not gripper}">
+      <xacro:include
+        filename="$(find kortex_description)/grippers/${gripper}/urdf/${gripper}_macro.xacro"
+        ns="kinova_manipulator" />
+
+      <xacro:if value="${kinova_type == 'gen3'}">
+        <xacro:property name="last_arm_link" value="end_effector_link" />
+      </xacro:if>
+      <xacro:unless value="${kinova_type == 'gen3'}">
+        <xacro:property name="last_arm_link" value="dummy_link" />
+      </xacro:unless>
+
+      <xacro:arg name="sim_ignition" default="true" />
+      <xacro:arg name="sim_isaac" default="false" />
+
+      <xacro:kinova_manipulator.load_gripper
+        parent="${prefix}${last_arm_link}"
+        prefix="${prefix}"
+        use_fake_hardware="${use_fake_hardware}"
+        fake_sensor_commands="${fake_sensor_commands}"
+        sim_ignition="true"
+        sim_isaac="false"
+      />
+    </xacro:unless>
+
+    <xacro:if value="${vision}">
+      <gazebo reference="${device_namespace}_camera_color_frame">
+        <sensor name="${ns}${device_namespace}_camera_sensor" type="rgbd_camera">
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>${camera_width}</width>
+              <height>${camera_height}</height>
+              <format>RGB_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>5</far>
+            </clip>
+            <distortion>
+              <k1>0.0</k1>
+              <k2>0.0</k2>
+              <k3>0.0</k3>
+              <p1>0.0</p1>
+              <p2>0.0</p2>
+              <center>0.5 0.5</center>
+            </distortion>
+            <lens>
+              <intrinsics>
+                <fx>554.25469</fx>
+                <fy>554.25469</fy>
+                <cx>320.5</cx>
+                <cy>240.5</cy>
+                <s>0</s>
+              </intrinsics>
+              <!-- These need to match the intrinsics above or
+              Ignition will default to different default values -->
+              <projection>
+                <p_fx>554.25469</p_fx>
+                <p_fy>554.25469</p_fy>
+                <p_cx>320.5</p_cx>
+                <p_cy>240.5</p_cy>
+                <tx>0</tx>
+                <ty>0</ty>
+              </projection>
+            </lens>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.00</stddev>
+            </noise>
+            <depth_camera>
+              <clip>
+                <near>0.25</near>
+                <far>5</far>
+              </clip>
+            </depth_camera>
+            <optical_frame_id>${device_namespace}_color_optical_frame</optical_frame_id>
+          </camera>
+          <ignition_frame_id>${device_namespace}_camera_color_frame</ignition_frame_id>
+          <always_on>1</always_on>
+          <update_rate>${camera_fps}</update_rate>
+          <visualize>true</visualize>
+          <topic>${ns}${device_namespace}/wrist_mounted_camera</topic>
+          <enable_metrics>false</enable_metrics>
+        </sensor>
+      </gazebo>
+
+    </xacro:if>
+
+  </xacro:macro>
+</robot>

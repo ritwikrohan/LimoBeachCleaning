@@ -1,0 +1,56 @@
+Paste the 'yolo' folder in 'src' folder of your workspace
+
+navigate to yolo workspace in terminal and execute following commands
+
+"""
+	cd easy-yolov7
+	pip3 install Cython==0.29.32
+	pip3 install -r requirements.txt
+"""
+
+This will take around 10 min to complete.
+
+Install dependencies, run following in the same terminal
+
+"""
+	sudo apt install ros-humble-navigation2
+	sudo apt install ros-humble-nav2-bringup
+"""
+
+Modify the launch file in location 'yolo/launch/navigation.launch.py'
+with the location of package in your system, 
+"""
+	map_path = '/home/jagadeesh/detect/src/yolo/params/final.yaml'
+        nav_path = '/home/jagadeesh/detect/src/yolo/params/nav2_params.yaml'
+        slam_param_path = '/home/jagadeesh/detect/src/yolo/params/mapper_params_online_async.yaml'
+"""
+
+after completetion execute following to build the workspace (in the same terminal)
+
+"""
+	cd ../../../
+	colcon build
+	source install/setup.bash
+"""
+
+To run the program with nav2 and yolov7 
+
+Termnal-1:
+"""
+	ros2 launch beach_world world.launch.py
+"""
+
+Terminal-2:
+"""
+	ros2 launch rosbot_xl_gazebo spawn.launch.py use_sim_time:=True camera_model:=orbbec_astra
+"""
+
+Terminal-3:
+"""
+	ros2 launch yolo navigation.launch.py
+"""
+
+This will open yolov7 detecion window + rviz with navigation stack enabled
+
+At first initialize robot with "initial pose" in rviz.
+

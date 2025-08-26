@@ -1,0 +1,285 @@
+<?xml version="1.0"?>
+
+<sdf version='1.6'>
+  <world name='beach_world'>
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="ignition-gazebo-contact-system" name="gz::sim::systems::Contact" />
+    <plugin filename="ignition-gazebo-imu-system" name="gz::sim::systems::Imu" />
+    <plugin filename="ignition-gazebo-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="ignition-gazebo-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="ignition-gazebo-sensors-system" name="gz::sim::systems::Sensors" />
+    <plugin filename="ignition-gazebo-user-commands-system" name="gz::sim::systems::UserCommands" />
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>50.088280</latitude_deg>
+      <longitude_deg>19.938931</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+
+    <scene>
+      <ambient>0.8 0.8 0.8 1</ambient>
+      <background>0 0 0 1</background>
+      <grid>0</grid>
+      <shadows>1</shadows>
+    </scene>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <gui fullscreen='0'>
+      <camera name='gui_camera'>
+        <pose>25.2459 0.588279 23.8295 0 0.925797 -2.86917</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+      <!-- <floor name='L1' model_name='Surfaces'>
+        <model name='OpenRobotics/AdjTable'/>
+        <model name='OpenRobotics/AdjTable_2'/>
+        <model name='OpenRobotics/AdjTable_3'/>
+        <model name='OpenRobotics/AdjTable_4'/>
+        <model name='OpenRobotics/AdjTable_5'/>
+        <model name='OpenRobotics/AdjTable_6'/>
+        <model name='OpenRobotics/AdjTable_7'/>
+        <model name='OpenRobotics/AdjTable_8'/>
+        <model name='OpenRobotics/AdjTable_9'/>
+        <model name='OpenRobotics/AdjTable_10'/>
+        <model name='OpenRobotics/AdjTable_11'/>
+        <model name='OpenRobotics/AdjTable_12'/>
+        <model name='OpenRobotics/AdjTable_13'/>
+        <model name='OpenRobotics/BathroomSink'/>
+        <model name='OpenRobotics/DeskChair'/>
+        <model name='OpenRobotics/DeskChair_2'/>
+        <model name='OpenRobotics/DeskChair_3'/>
+        <model name='OpenRobotics/DeskChair_4'/>
+        <model name='OpenRobotics/DeskChair_5'/>
+        <model name='OpenRobotics/DeskChair_6'/>
+        <model name='OpenRobotics/DeskChair_7'/>
+        <model name='OpenRobotics/DeskChair_8'/>
+        <model name='OpenRobotics/DeskChair_9'/>
+        <model name='OpenRobotics/Toilet'/>
+        <model name='OpenRobotics/TrashBin'/>
+        <model name='OpenRobotics/TrashBin_2'/>
+        <model name='OpenRobotics/TrashBin_3'/>
+        <model name='OpenRobotics/TrashBin_4'/>
+        <model name='OpenRobotics/TrashBin_5'/>
+        <model name='OpenRobotics/TrashBin_6'/>
+        <model name='OpenRobotics/Table'/>
+        <model name='OpenRobotics/Table_2'/>
+        <model name='OpenRobotics/WoodenChair'/>
+        <model name='OpenRobotics/WoodenChair_2'/>
+        <model name='OpenRobotics/WoodenChair_3'/>
+        <model name='OpenRobotics/WoodenChair_4'/>
+        <model name='OpenRobotics/WoodenChair_5'/>
+        <model name='OpenRobotics/WoodenChair_6'/>
+        <model name='OpenRobotics/TrashBin_7'/>
+        <model name='OpenRobotics/TrashBin_8'/>
+        <model name='OpenRobotics/TrashBin_9'/>
+        <model name='OpenRobotics/OfficeChairBlack'/>
+        <model name='OpenRobotics/OfficeChairBlack_2'/>
+        <model name='OpenRobotics/OfficeChairBlack_3'/>
+        <model name='OpenRobotics/OfficeChairBlack_4'/>
+        <model name='OpenRobotics/CoffeeTable'/>
+        <model name='OpenRobotics/WhiteCabinet'/>
+        <model name='OpenRobotics/WhiteCabinet_2'/>
+        <model name='OpenRobotics/WhiteCabinet_3'/>
+        <model name='OpenRobotics/WhiteCabinet_4'/>
+        <model name='OpenRobotics/WhiteCabinet_5'/>
+        <model name='OpenRobotics/WhiteCabinet_6'/>
+        <model name='OpenRobotics/Fridge'/>
+        <model name='OpenRobotics/WhiteCabinet_7'/>
+        <model name='OpenRobotics/Drawer'/>
+        <model name='OpenRobotics/Drawer_2'/>
+        <model name='OpenRobotics/Drawer_3'/>
+        <model name='OpenRobotics/Drawer_4'/>
+        <model name='OpenRobotics/Drawer_5'/>
+        <model name='OpenRobotics/Drawer_6'/>
+        <model name='OpenRobotics/Drawer_7'/>
+        <model name='OpenRobotics/Drawer_8'/>
+        <model name='OpenRobotics/Drawer_9'/>
+        <model name='OpenRobotics/Drawer_10'/>
+        <model name='OpenRobotics/Drawer_11'/>
+        <model name='null1'/>
+        <model name='null2'/>
+      </floor> -->
+    </gui>
+    <model name="beach">
+      <static>true</static>
+      <link name="base_link">
+        <collision name="sand_collision">
+          <pose>0 0 0.01 0 0 0</pose> <!-- Adjust the z value if needed -->
+          <geometry>
+            <mesh>
+              <uri>model://BeachModel/meshes/beach.dae</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name="Sand_visual">
+          <geometry>
+            <mesh>
+              <uri>model://BeachModel/meshes/beach.dae</uri>
+              <scale>0.01 0.01 0.01</scale>
+              <submesh>
+                <name>Sand</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>0.7 0.7 0.7</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://BeachModel/materials/textures/Sand_Albedo.jpg</albedo_map>
+                <normal_map>model://BeachModel/materials/textures/Sand_Normal.jpg</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name="Beach_visual">
+          <geometry>
+            <mesh>
+              <uri>model://BeachModel/meshes/beach.dae</uri>
+              <scale>0.01 0.01 0.01</scale>
+              <submesh>
+                <name>Beach</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>0.8 0.8 0.8</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://BeachModel/materials/textures/Beach_Albedo.jpg</albedo_map>
+                <normal_map>model://BeachModel/materials/textures/Beach_Normal.jpg</normal_map>
+                <roughness_map>model://BeachModel/materials/textures/Beach_Roughness.jpg</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name="Bush_visual">
+          <geometry>
+            <mesh>
+              <uri>model://BeachModel/meshes/beach.dae</uri>
+              <scale>0.01 0.01 0.01</scale>
+              <submesh>
+                <name>Bush</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>1.0 1.0 1.0</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://BeachModel/materials/textures/Bush_Albedo.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name="Coral_visual">
+          <geometry>
+            <mesh>
+              <uri>model://BeachModel/meshes/beach.dae</uri>
+              <scale>0.01 0.01 0.01</scale>
+              <submesh>
+                <name>Coral</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>1.0 1.0 1.0</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://BeachModel/materials/textures/Coral_Albedo.jpg</albedo_map>
+                <normal_map>model://BeachModel/materials/textures/Coral_Normal.jpg</normal_map>
+                <roughness_map>model://BeachModel/materials/textures/Coral_Roughness.jpg</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name="Moss_visual">
+          <geometry>
+            <mesh>
+              <uri>model://BeachModel/meshes/beach.dae</uri>
+              <scale>0.01 0.01 0.01</scale>
+              <submesh>
+                <name>Moss</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>1.0 1.0 1.0</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://BeachModel/materials/textures/Moss_Albedo.jpg</albedo_map>
+                <normal_map>model://BeachModel/materials/textures/Moss_Normal.jpg</normal_map>
+                <roughness_map>model://BeachModel/materials/textures/Moss_Roughness.jpg</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/RC%20Boat</uri>
+      <pose>5 -1 0.1 0 0 0</pose> <!-- Adjust pose as needed -->
+      <name>rc_boat_instance</name>
+      <static>True</static> <!-- Example: Set to false if the boat should move -->
+      <scale>5 5 5</scale>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/RC%20Boat</uri>
+      
+      <pose>5.5 -1 0.1 0 0 0</pose> <!-- Adjust pose as needed -->
+      <name>rc_boat_instance_2</name>
+      <static>True</static> <!-- Example: Set to false if the boat should move -->
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/RC%20Boat</uri>
+      <scale>5.0 5.0 5.0</scale>
+      <pose>4.5 -1 0.1 0 0 0</pose> <!-- Adjust pose as needed -->
+      <name>rc_boat_instance_3</name>
+      <static>True</static> <!-- Example: Set to false if the boat should move -->
+    </include>
+    <include>
+      <uri>
+      https://fuel.gazebosim.org/1.0/OpenRobotics/models/Male visitor
+      </uri>
+      <scale>0.5 0.5 0.5</scale>
+      <pose>0 -3 1 0 0 0</pose> <!-- Adjust pose as needed -->
+      <name>human_1</name>
+      <static>False</static> 
+    </include>
+  </world>
+</sdf>
+
