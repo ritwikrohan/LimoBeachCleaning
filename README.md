@@ -6,15 +6,23 @@ Autonomous beach cleaning system using AgileX Limo Cobot with ROS2 for environme
 
 This project implements an autonomous beach cleaning robot that identifies and collects trash using computer vision and robotic manipulation. The system combines SLAM navigation, object detection, person following, and precision grasping to operate in unstructured outdoor environments.
 
+
 ## Demo
 
-### Trash Detection and Pickup
-[![Trash Pickup Demo](https://img.youtube.com/vi/m8PfNT-SJBM/0.jpg)](https://www.youtube.com/watch?v=m8PfNT-SJBM)
-*Click to watch: Limo robot detecting and collecting trash in Gazebo simulation*
+### Real Robot Testing
+| Trash Approach | Arm Manipulation |
+|--------------|------------------|
+| ![Real Robot Trash](https://i.imgflip.com/a48yrh.gif) | ![Real Robot Following](https://i.imgflip.com/a48ze5.gif) |
+| *ArUco marker detection and pickup* | *Arm Manipulation with ArUco markers* |
 
-### Person Following with YOLO
-[![Person Following Demo](https://img.youtube.com/vi/0Gs47wrVdOE/0.jpg)](https://www.youtube.com/watch?v=0Gs47wrVdOE)
-*Click to watch: YOLO-based person detection and PID-controlled following*
+*Note: Real hardware implementation used ArUco markers instead of YOLO due to Raspberry Pi 4 computational constraints - couldn't run RTAB-Map and YOLO simultaneously*
+
+### Simulation Testing
+| Trash Detection and Pickup | Person Following with YOLO |
+|----------------------------|----------------------------|
+| [![Trash Pickup Demo](https://img.youtube.com/vi/m8PfNT-SJBM/0.jpg)](https://www.youtube.com/watch?v=m8PfNT-SJBM) | [![Person Following Demo](https://img.youtube.com/vi/0Gs47wrVdOE/0.jpg)](https://www.youtube.com/watch?v=0Gs47wrVdOE) |
+| *Click to watch: Trash detection and collection* | *Click to watch: PID-controlled person following* |
+
 
 ## Key Features
 
